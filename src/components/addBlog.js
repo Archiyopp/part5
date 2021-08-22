@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { create } from '../services/blogs';
+import PropTypes from 'prop-types';
 
 export default function AddBlog({
   setSuccessMessage,
@@ -71,3 +72,9 @@ export default function AddBlog({
     </div>
   );
 }
+
+AddBlog.propTypes = {
+  setSuccessMessage: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
+  hideCreateForm: PropTypes.func.isRequired,
+};
