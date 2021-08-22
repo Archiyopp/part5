@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { remove, update } from '../services/blogs';
-const Blog = ({ blog, setErrorMessage }) => {
+const Blog = ({ blog, setErrorMessage = null }) => {
   const [showDetails, setShowDetails] = useState(false);
   const { title, likes, author, url, id, user } = blog;
   const likeBlog = async () => {
