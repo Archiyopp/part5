@@ -4,6 +4,7 @@ import { create } from '../services/blogs';
 export default function AddBlog({
   setSuccessMessage,
   setErrorMessage,
+  hideCreateForm,
 }) {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
@@ -23,6 +24,7 @@ export default function AddBlog({
       setAuthor('');
       setTitle('');
       setUrl('');
+      hideCreateForm();
     } catch (e) {
       setErrorMessage(e.message);
       setTimeout(() => setErrorMessage(null), 4000);
@@ -59,8 +61,13 @@ export default function AddBlog({
             name="url"
           />
         </p>
-        <button type="submit">Add new blog</button>
+        <button type="submit" className="btn">
+          Add new blog
+        </button>
       </form>
+      <button onClick={hideCreateForm} className="btn">
+        cancel
+      </button>
     </div>
   );
 }

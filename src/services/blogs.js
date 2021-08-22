@@ -18,6 +18,11 @@ export const create = async (newObject) => {
 };
 
 export const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl} /${id}`, newObject);
+  const request = axios.put(`${baseUrl}/${id}`, newObject);
   return request.then((response) => response.data);
+};
+
+export const remove = async (id) => {
+  const config = { headers: { Authorization: token } };
+  await axios.delete(`${baseUrl}/${id}`, config);
 };

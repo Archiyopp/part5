@@ -16,3 +16,18 @@
   color: red;
   border: 2px solid red;
 }
+.container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.btn {
+  padding: 5px;
+  margin: 5px;
+}
+
+.blog {
+  padding: 2px;
+  margin: 5px 10px;
+  border-top: 1px solid black;
+}

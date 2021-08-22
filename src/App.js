@@ -9,6 +9,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
     getAll().then((blogs) => setBlogs(blogs));
@@ -24,8 +25,18 @@ const App = () => {
     }
   }, []);
 
+  const blogsToDisplay = [...blogs]
+    .sort((a, b) => b.likes - a.likes)
+    .map((blog) => (
+      <Blog
+        key={blog.id}
+        blog={blog}
+        setErrorMessage={setErrorMessage}
+      />
+    ));
+
   return (
-    <div>
+    <div className="container">
       {user === null ? (
         <LoginForm
           setUser={setUser}
@@ -46,17 +57,26 @@ const App = () => {
                 window.localStorage.removeItem('loggedBlogAppUser');
                 setUser(null);
               }}
+              className="btn"
             >
               Log out
             </button>
           </p>
-          <AddBlog
-            setErrorMessage={setErrorMessage}
-            setSuccessMessage={setSuccessMessage}
-          />
-          {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
-          ))}
+          {showCreateForm ? (
+            <AddBlog
+              setErrorMessage={setErrorMessage}
+              setSuccessMessage={setSuccessMessage}
+              hideCreateForm={() => setShowCreateForm(false)}
+            />
+          ) : (
+            <button
+              onClick={() => setShowCreateForm(true)}
+              className="btn"
+            >
+              Create new blog
+            </button>
+          )}
+          {blogsToDisplay}
         </>
       )}
     </div>
