@@ -23,6 +23,11 @@ export const update = (id, newObject) => {
 };
 
 export const remove = async (id) => {
-  const config = { headers: { Authorization: token } };
+  const config = {
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+    },
+  };
   await axios.delete(`${baseUrl}/${id}`, config);
 };

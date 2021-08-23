@@ -17,12 +17,14 @@ const Blog = ({ blog, deleteBlog, likeBlog }) => {
         <p>{url}</p>
         <p>
           likes {likes}{' '}
-          <button className="btn" onClick={likeBlog} id="like-btn">
+          <button className="btn like-btn" onClick={likeBlog}>
             like
           </button>
         </p>
         <p>{author}</p>
-        <button onClick={deleteBlog}>remove</button>
+        <button onClick={deleteBlog} className="btn" id="remove-btn">
+          remove
+        </button>
       </div>
     );
   }

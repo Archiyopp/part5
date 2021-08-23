@@ -48,16 +48,17 @@ const App = () => {
   const blogsToDisplay = [...blogs]
     .sort((a, b) => b.likes - a.likes)
     .map((blog) => {
-      const { title, author, likes, url, user } = blog;
+      const { title, author, likes, url, user, id } = blog;
       const deleteBlog = async () => {
         const confirm = window.confirm(
           'Are you sure you want to delete this post?'
         );
         if (confirm) {
           try {
-            await remove(blog.id);
+            await remove(id);
+            setBlogs([...blogs.filter((blog) => blog.id !== id)]);
           } catch (e) {
-            setErrorMessage(e.message);
+            setErrorMessage('You are not the owner of the blog');
             setTimeout(() => setErrorMessage(null), 4000);
           }
         }
@@ -71,14 +72,18 @@ const App = () => {
           user: user?.id,
         };
         try {
-          await update(blog.id, newBlog);
+          const updatedBlog = await update(id, newBlog);
+          setBlogs([
+            ...blogs.filter((blog) => blog.id !== id),
+            updatedBlog,
+          ]);
         } catch (e) {
           console.error(e.message);
         }
       };
       return (
         <Blog
-          key={blog.id}
+          key={id}
           blog={blog}
           setErrorMessage={setErrorMessage}
           likeBlog={likeBlog}
@@ -110,6 +115,7 @@ const App = () => {
                 setUser(null);
               }}
               className="btn"
+              id="logout"
             >
               Log out
             </button>

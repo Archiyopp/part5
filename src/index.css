@@ -31,3 +31,6 @@
   margin: 5px 10px;
   border-top: 1px solid black;
 }
+.like-btn {
+  background: lightgreen;
+}
