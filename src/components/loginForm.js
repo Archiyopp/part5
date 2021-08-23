@@ -43,7 +43,8 @@ export default function LoginForm({
           <input
             type="text"
             value={username}
-            name="Username"
+            id="username"
+            name="username"
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
@@ -51,12 +52,15 @@ export default function LoginForm({
           password{' '}
           <input
             type="password"
+            id="password"
             value={password}
-            name="Password"
+            name="password"
             onChange={({ target }) => setPassword(target.value)}
           />{' '}
         </div>{' '}
-        <button type="submit">login</button>{' '}
+        <button type="submit" id="login-btn">
+          login
+        </button>{' '}
       </form>
     </>
   );

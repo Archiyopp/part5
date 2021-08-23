@@ -8,11 +8,9 @@ export default function AddBlog({ hideCreateForm, createBlog }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.author && formData.url && formData.title) {
-      await createBlog(formData);
-      hideCreateForm();
-      setFormData(initialData);
-    }
+    await createBlog(formData);
+    hideCreateForm();
+    setFormData(initialData);
   };
   return (
     <div>
