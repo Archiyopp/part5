@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { remove } from '../services/blogs';
 const Blog = ({ blog, deleteBlog, likeBlog }) => {
   const [showDetails, setShowDetails] = useState(false);
   const { title, likes, author, url } = blog;
