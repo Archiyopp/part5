@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddBlog from './components/addBlog';
 import Blog from './components/Blog';
 import LoginForm from './components/loginForm';
-import { getAll, setToken, update } from './services/blogs';
+import { create, getAll, setToken, update } from './services/blogs';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,6 +24,20 @@ const App = () => {
       setToken(user.token);
     }
   }, []);
+
+  const createBlog = async (newObject) => {
+    try {
+      const returnedBlog = await create(newObject);
+      setBlogs([...blogs, returnedBlog]);
+      setSuccessMessage(
+        `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+      );
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } catch (e) {
+      setErrorMessage(e.message);
+      setTimeout(() => setErrorMessage(null), 4000);
+    }
+  };
 
   const blogsToDisplay = [...blogs]
     .sort((a, b) => b.likes - a.likes)
@@ -81,6 +95,7 @@ const App = () => {
               setErrorMessage={setErrorMessage}
               setSuccessMessage={setSuccessMessage}
               hideCreateForm={() => setShowCreateForm(false)}
+              createBlog={createBlog}
             />
           ) : (
             <button

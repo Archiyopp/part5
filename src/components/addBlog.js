@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { create } from '../services/blogs';
 import PropTypes from 'prop-types';
 
-export default function AddBlog({
-  setSuccessMessage,
-  setErrorMessage,
-  hideCreateForm,
-}) {
+export default function AddBlog({ hideCreateForm, createBlog }) {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
@@ -18,18 +13,11 @@ export default function AddBlog({
       title,
       url,
     };
-    try {
-      await create(newBlog);
-      setSuccessMessage(`A new blog ${title} by ${author} added`);
-      setTimeout(() => setSuccessMessage(null), 4000);
-      setAuthor('');
-      setTitle('');
-      setUrl('');
-      hideCreateForm();
-    } catch (e) {
-      setErrorMessage(e.message);
-      setTimeout(() => setErrorMessage(null), 4000);
-    }
+    await createBlog(newBlog);
+    hideCreateForm();
+    setAuthor('');
+    setTitle('');
+    setUrl('');
   };
   return (
     <div>
@@ -77,7 +65,8 @@ export default function AddBlog({
 }
 
 AddBlog.propTypes = {
-  setSuccessMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
+  setSuccessMessage: PropTypes.func,
+  setErrorMessage: PropTypes.func,
   hideCreateForm: PropTypes.func.isRequired,
+  createBlog: PropTypes.func.isRequired,
 };
