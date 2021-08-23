@@ -1,18 +1,8 @@
 import React, { useState } from 'react';
-import { remove, update } from '../services/blogs';
-const Blog = ({ blog, setErrorMessage = null }) => {
+import { remove } from '../services/blogs';
+const Blog = ({ blog, setErrorMessage, likeBlog }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const { title, likes, author, url, id, user } = blog;
-  const likeBlog = async () => {
-    const newBlog = {
-      title,
-      author,
-      likes: likes + 1,
-      url,
-      user: user?.id || '611fe444369165cf7cb3717f',
-    };
-    await update(id, newBlog);
-  };
+  const { title, likes, author, url, id } = blog;
   const deleteBlog = async () => {
     const confirm = window.confirm(
       'Are you sure you want to delete this post?'

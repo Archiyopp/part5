@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddBlog from './components/addBlog';
 import Blog from './components/Blog';
 import LoginForm from './components/loginForm';
-import { getAll, setToken } from './services/blogs';
+import { getAll, setToken, update } from './services/blogs';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -27,13 +27,27 @@ const App = () => {
 
   const blogsToDisplay = [...blogs]
     .sort((a, b) => b.likes - a.likes)
-    .map((blog) => (
-      <Blog
-        key={blog.id}
-        blog={blog}
-        setErrorMessage={setErrorMessage}
-      />
-    ));
+    .map((blog) => {
+      const { title, author, likes, url, user } = blog;
+      const likeBlog = async () => {
+        const newBlog = {
+          title,
+          author,
+          likes: likes + 1,
+          url,
+          user: user?.id,
+        };
+        await update(blog.id, newBlog);
+      };
+      return (
+        <Blog
+          key={blog.id}
+          blog={blog}
+          setErrorMessage={setErrorMessage}
+          likeBlog={likeBlog}
+        />
+      );
+    });
 
   return (
     <div className="container">

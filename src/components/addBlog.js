@@ -38,6 +38,7 @@ export default function AddBlog({
         <p>
           title:{' '}
           <input
+            id="title"
             type="text"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
@@ -47,6 +48,7 @@ export default function AddBlog({
         <p>
           author:{' '}
           <input
+            id="author"
             type="text"
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
@@ -56,6 +58,7 @@ export default function AddBlog({
         <p>
           url:{' '}
           <input
+            id="url"
             type="text"
             value={url}
             onChange={({ target }) => setUrl(target.value)}
