@@ -125,6 +125,7 @@ const App = () => {
             <button
               onClick={() => setShowCreateForm(true)}
               className="btn"
+              id="show-create-blog"
             >
               Create new blog
             </button>

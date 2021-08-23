@@ -32,4 +32,37 @@ describe('Blog app', function () {
       .and('have.css', 'border-style', 'solid');
     cy.get('html').should('not.contain', 'logged-in');
   });
+
+  describe('when logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'archi', password: 'testing' });
+    });
+
+    it('a new blog can be created', function () {
+      cy.contains('Create new blog');
+      cy.get('#show-create-blog').click();
+      cy.get('#title').type('React is kinda good');
+      cy.get('#author').type('Cristian Fernandez');
+      cy.get('#url').type('www.archi.com');
+      cy.get('#submit-blog').click();
+      cy.contains('React is kinda good');
+      cy.contains('Cristian Fernandez');
+    });
+    describe('and a blog exists', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'React is kinda good',
+          author: 'Cristian Fernandez',
+          url: 'www.archi.com',
+        });
+      });
+      it.only(', the user can like the blog', function () {
+        cy.contains('React is kinda good').find('button').click();
+        cy.contains('React is kinda good')
+          .parent()
+          .find('#like-btn')
+          .click();
+      });
+    });
+  });
 });

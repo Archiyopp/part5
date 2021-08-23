@@ -52,7 +52,7 @@ export default function AddBlog({ hideCreateForm, createBlog }) {
             name="url"
           />
         </p>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn" id="submit-blog">
           Add new blog
         </button>
       </form>
