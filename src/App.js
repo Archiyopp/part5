@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import AddBlog from './components/addBlog';
 import Blog from './components/Blog';
 import LoginForm from './components/loginForm';
-import { create, getAll, setToken, update } from './services/blogs';
+import {
+  create,
+  getAll,
+  remove,
+  setToken,
+  update,
+} from './services/blogs';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -43,6 +49,19 @@ const App = () => {
     .sort((a, b) => b.likes - a.likes)
     .map((blog) => {
       const { title, author, likes, url, user } = blog;
+      const deleteBlog = async () => {
+        const confirm = window.confirm(
+          'Are you sure you want to delete this post?'
+        );
+        if (confirm) {
+          try {
+            await remove(blog.id);
+          } catch (e) {
+            setErrorMessage(e.message);
+            setTimeout(() => setErrorMessage(null), 4000);
+          }
+        }
+      };
       const likeBlog = async () => {
         const newBlog = {
           title,
@@ -63,6 +82,7 @@ const App = () => {
           blog={blog}
           setErrorMessage={setErrorMessage}
           likeBlog={likeBlog}
+          deleteBlog={deleteBlog}
         />
       );
     });

@@ -55,3 +55,22 @@ test('if the like button is clicked twice, the event handler is called twice', (
   fireEvent.click(likeButton);
   expect(mockHandler.mock.calls).toHaveLength(2);
 });
+
+test('if the hide button is clicked, you can see the url and likes', () => {
+  const component = render(<Blog blog={blog} />);
+
+  const button = component.getByText('view');
+  expect(button).toBeDefined();
+  fireEvent.click(button);
+  expect(component.container).toHaveTextContent('Testing blog');
+  expect(component.container).toHaveTextContent('Cris');
+  expect(component.container).toHaveTextContent('wwww.wwww');
+  expect(component.container).toHaveTextContent('0');
+  const hideButton = component.getByText('hide');
+  expect(hideButton).toBeDefined();
+  fireEvent.click(hideButton);
+  expect(component.container).toHaveTextContent('Testing blog');
+  expect(component.container).toHaveTextContent('Cris');
+  expect(component.container).not.toHaveTextContent('wwww.wwww');
+  expect(component.container).not.toHaveTextContent('0');
+});

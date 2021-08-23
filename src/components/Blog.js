@@ -1,21 +1,8 @@
 import React, { useState } from 'react';
 import { remove } from '../services/blogs';
-const Blog = ({ blog, setErrorMessage, likeBlog }) => {
+const Blog = ({ blog, deleteBlog, likeBlog }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const { title, likes, author, url, id } = blog;
-  const deleteBlog = async () => {
-    const confirm = window.confirm(
-      'Are you sure you want to delete this post?'
-    );
-    if (confirm) {
-      try {
-        await remove(id);
-      } catch (e) {
-        setErrorMessage(e.message);
-        setTimeout(() => setErrorMessage(null), 4000);
-      }
-    }
-  };
+  const { title, likes, author, url } = blog;
   if (showDetails) {
     return (
       <div className="blog">
