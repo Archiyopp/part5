@@ -51,7 +51,11 @@ const App = () => {
           url,
           user: user?.id,
         };
-        await update(blog.id, newBlog);
+        try {
+          await update(blog.id, newBlog);
+        } catch (e) {
+          console.error(e.message);
+        }
       };
       return (
         <Blog

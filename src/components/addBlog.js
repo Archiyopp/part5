@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+const initialData = { author: '', title: '', url: '' };
 export default function AddBlog({ hideCreateForm, createBlog }) {
-  const [author, setAuthor] = useState('');
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+  const [formData, setFormData] = useState(initialData);
+  const { title, url, author } = formData;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newBlog = {
-      author,
-      title,
-      url,
-    };
-    await createBlog(newBlog);
+    await createBlog(formData);
+    setFormData(initialData);
     hideCreateForm();
-    setAuthor('');
-    setTitle('');
-    setUrl('');
   };
   return (
     <div>
@@ -29,7 +22,9 @@ export default function AddBlog({ hideCreateForm, createBlog }) {
             id="title"
             type="text"
             value={title}
-            onChange={({ target }) => setTitle(target.value)}
+            onChange={({ target }) =>
+              setFormData({ ...formData, title: target.value })
+            }
             name="title"
           />
         </p>
@@ -39,7 +34,9 @@ export default function AddBlog({ hideCreateForm, createBlog }) {
             id="author"
             type="text"
             value={author}
-            onChange={({ target }) => setAuthor(target.value)}
+            onChange={({ target }) =>
+              setFormData({ ...formData, author: target.value })
+            }
             name="author"
           />
         </p>
@@ -49,7 +46,9 @@ export default function AddBlog({ hideCreateForm, createBlog }) {
             id="url"
             type="text"
             value={url}
-            onChange={({ target }) => setUrl(target.value)}
+            onChange={({ target }) =>
+              setFormData({ ...formData, url: target.value })
+            }
             name="url"
           />
         </p>
